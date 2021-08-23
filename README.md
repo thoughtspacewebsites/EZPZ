@@ -1,0 +1,2 @@
+# EZPZ - Starter SFCs for Vue.JS #
+EZPZ is meant to be a "starter framework" set of SFCs for quick website / app development on Vue.JS. You can clone the repository and make changes as necessary for your project. If you have global changes that you think would benefit the repo, or have added new components, feel free to submit a pull request. May package this up at some point with a builder like Rollup, but in the meantime, just clone it down and get to work!
