@@ -1,5 +1,5 @@
 <template>
-  <section class="ezpz-modal-container" v-bind:class="{'dark-mode': darkMode}">
+  <section v-bind:id="'ezpz-modal-container-'+id" class="ezpz-modal-container" v-bind:class="{'dark-mode': darkMode}">
     <div class="ezpz-background" v-on:click="closeModal()"></div>
     <div class="ezpz-modal" v-bind:class="{'thin': thin, 'full-screen': fullScreen, 'error': error}">
       <span class="fa fa-times" v-if="!closeDisabled" v-on:click="closeModal()"></span>
@@ -20,7 +20,7 @@ export default {
   mixins: [],
 	data: function(){
 	    return {
-
+        id: null
 	    }
 	},
 	computed: {
@@ -35,8 +35,8 @@ export default {
     }
   },
   mounted: function(){
-    this.$el.parentNode.removeChild(this.$el);
-    document.getElementById('oakmont-bakery-pos').appendChild(this.$el);
+    this.id = this._uid;
+    this.$root.$el.append(this.$el);
   }
 }
 </script>
