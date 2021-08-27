@@ -47,7 +47,7 @@ export default {
   left:0;
   width:100%;
   height:100vh;
-  z-index:400000;
+  z-index:40000000000;
 }
 .ezpz-background{
   width:100%;
