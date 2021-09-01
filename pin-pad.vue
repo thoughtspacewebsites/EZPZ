@@ -1,5 +1,5 @@
 <template>
-  <div class="pin-pad">
+  <div class="pin-pad" v-bind:class="{'dark-mode': darkMode}">
     <div class="number flash-effect" v-for="number in (1, 9)" v-on:click="updateValue(number)">{{number}}</div>
     <div class="number"></div>
     <div class="number flash-effect" v-on:click="updateValue(0)">0</div>
@@ -14,7 +14,7 @@ export default {
   components: {
 
 	},
-	props: ['value'],
+	props: ['value', 'darkMode'],
 	data: function(){
 	    return {
 
@@ -73,6 +73,11 @@ flex-grow:1;
 border-bottom:1px solid rgba(0,0,0,.1);
 border-right:1px solid rgba(0,0,0,.1);
 }
+.dark-mode .number{
+  color:$light-text-color;
+  border-bottom:1px solid rgba(255,255,255,.1);
+  border-right:1px solid rgba(255,255,255,.1);
+}
 .number:nth-child(1),
 .number:nth-child(2),
 .number:nth-child(3){
@@ -83,5 +88,16 @@ border-right:1px solid rgba(0,0,0,.1);
 .number:nth-child(7),
 .number:nth-child(10){
   border-left:1px solid rgba(0,0,0,.1);
+}
+.dark-mode .number:nth-child(1),
+.dark-mode .number:nth-child(2),
+.dark-mode .number:nth-child(3){
+  border-top:1px solid rgba(255,255,255,.1);
+}
+.dark-mode .number:nth-child(1),
+.dark-mode .number:nth-child(4),
+.dark-mode .number:nth-child(7),
+.dark-mode .number:nth-child(10){
+  border-left:1px solid rgba(255,255,255,.1);
 }
 </style>
