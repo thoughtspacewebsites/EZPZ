@@ -1,5 +1,5 @@
 <template>
-    <section class="ezpz-universal-keyboard">
+    <section class="ezpz-universal-keyboard" v-bind:class="{'pin-pad': isPinPad}">
         <transition v-bind:name="animationName">
             <div v-if="activeInput">
                 <div v-bind:class="keyboardClass" v-if="activeInput"></div>
@@ -23,6 +23,11 @@ export default{
             activeInput: false,
             willDestroy: false,
             initing: false,
+            isPinPad: false,
+            pinPadLayout: {
+                default: ["1 2 3", "4 5 6", "7 8 9", " 0 ", "{bksp}"]
+            },
+            padTheme: "hg-theme-default hg-layout-numeric numeric-theme"
         }
     },
     computed: {
@@ -37,7 +42,6 @@ export default{
     },
     methods: {
         tearDownKeyboard: function(withAnimate){
-            
             if(this.activeInput){
                 //Remove our event listeners...
                 document.querySelector("#"+this.activeInput).removeEventListener('keyup', this.watchPhysicalKeyboard);
@@ -46,10 +50,12 @@ export default{
                 if(this.activeInput == 'uk-active-input'){
                     document.querySelector('#uk-active-input').id = "";
                 }
+                document.querySelector('.uk-active-input').classList.remove('uk-active-input');
                 if(!withAnimate){
                     this.keyboard.destroy();
                     this.keyboard = false;
                     this.activeInput = false;
+                    this.isPinPad = false;
                 }
                 else{
                     var that = this;
@@ -57,6 +63,7 @@ export default{
                     setTimeout(function(){
                         that.keyboard.destroy();
                         that.keyboard = false;
+                        that.isPinPad = false;
                     }, 500)
                 }
                 
@@ -110,12 +117,12 @@ export default{
                 var that = this;
                 this.activeInput = event.target.id && event.target.id != "" ? event.target.id : 'uk-active-input'
                 event.target.id = this.activeInput;
-                //We need a watcher to see if the click was on our keyboard, and if so, clear the timeout for 
-                //destroying the keyboard
+                event.target.classList.add('uk-active-input');
+     
                 this.$nextTick(function(){
                     
                     //Now make a new keyboard for this input...
-                    that.keyboard = new Keyboard(that.keyboardClass, {
+                    var kbOptions = {
                         onChange: function(input){
                             var active = "#"+that.activeInput;
                             document.querySelector(active).setAttribute("value", input);
@@ -128,15 +135,21 @@ export default{
                             
                         },
                         inputName: that.activeInput
-                    });
+                    };
+                    if(event.target.type == "number"){
+                        that.isPinPad = true;
+                        kbOptions.layout = that.pinPadLayout;
+                        kbOptions.theme = that.padTheme;
+                    }
+                    that.keyboard = new Keyboard(that.keyboardClass, kbOptions);
                     if(event.target.value != ""){
                         that.keyboard.setInput(event.target.value);
                     }
                     that.keyboardVisible = true;
 
-                    document.querySelector("#"+this.activeInput).addEventListener('keyup', that.watchPhysicalKeyboard);
+                    document.querySelector("#"+that.activeInput).addEventListener('keyup', that.watchPhysicalKeyboard);
                     document.querySelector('.universal-keyboard').addEventListener('click', that.stopDestroy)
-                    document.body.addEventListener('click', this.hideOnClick);
+                    document.body.addEventListener('click', that.hideOnClick);
                     
                 });
             }
@@ -171,6 +184,24 @@ export default{
         bottom:0;
         left:0;
         z-index:100000000;
+    }
+    .ezpz-universal-keyboard.pin-pad{
+        width:400px;
+        bottom:20px;
+        left:20px; 
+    }
+    .ezpz-universal-keyboard.pin-pad .universal-keyboard{
+        border-radius:30px;
+    }
+    .ezpz-universal-keyboard.pin-pad .universal-keyboard .hg-row:first-of-type .hg-button:first-of-type{
+        border-top-left-radius:30px;
+    }
+    .ezpz-universal-keyboard.pin-pad .universal-keyboard .hg-row:first-of-type .hg-button:last-of-type{
+        border-top-right-radius:30px;
+    }
+    .ezpz-universal-keyboard.pin-pad .universal-keyboard .hg-row:last-of-type .hg-button{
+        border-bottom-left-radius:30px;
+        border-bottom-right-radius:30px;
     }
     .hg-theme-default .hg-button{
         height:50px;
