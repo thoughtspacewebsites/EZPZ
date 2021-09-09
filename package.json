@@ -5,5 +5,8 @@
   "main": "./index.js",
   "repository": "https://github.com/thoughtspacewebsites/EZPZ.git",
   "author": "Thought Space Designs <thoughtspacewebsites@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "simple-keyboard": "^3.2.51"
+  }
 }
