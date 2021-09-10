@@ -15,7 +15,7 @@ import 'simple-keyboard/build/css/index.css';
 export default{
     name: 'UniversalKeyboard',
     components: {},
-    props: [],
+    props: ['enableKeyboard', 'enablePinPad'],
     data: function(){
         return {
             keyboard: null,
@@ -103,7 +103,14 @@ export default{
             this.keyboard.setInput(event.target.value);
         },
         onInputFocus: function(event){
-            if(event.target.localName == "input" && (!this.keyboard || this.activeInput != event.target.id)){
+            if(
+                event.target.localName == "input" && 
+                (
+                    event.target.type == 'number' && this.enablePinPad ||
+                    event.target.type != 'number' && this.enableKeyboard
+                ) &&
+                (!this.keyboard || this.activeInput != event.target.id)
+            ){
                 clearTimeout(this.willDestroy);
 
                 if(this.activeInput && this.activeInput != event.target.id){
@@ -190,6 +197,9 @@ export default{
         bottom:20px;
         left:20px; 
     }
+    .ezpz-universal-keyboard .universal-keyboard{
+        background:#333333;
+    }
     .ezpz-universal-keyboard.pin-pad .universal-keyboard{
         border-radius:30px;
     }
@@ -206,5 +216,11 @@ export default{
     .hg-theme-default .hg-button{
         height:50px;
         font-size:18px;
+        background:$dark-bg-color;
+        color:$light-text-color;
+        border-bottom:none;
+    }
+    .hg-theme-default .hg-activeButton{
+        background:$form-success !important;
     }
 </style>
