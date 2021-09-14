@@ -109,6 +109,7 @@ export default{
                     event.target.type == 'number' && this.enablePinPad ||
                     event.target.type != 'number' && this.enableKeyboard
                 ) &&
+                !event.target.classList.contains('no-keyboard') &&
                 (!this.keyboard || this.activeInput != event.target.id)
             ){
                 clearTimeout(this.willDestroy);
@@ -180,7 +181,7 @@ export default{
     beforeDestroy: function(){
         document.body.removeEventListener('focusin', this.onInputFocus);
         document.body.removeEventListener('focusout', this.onInputFocusLost);
-    }
+    },
 }
 </script>
 <style lang="scss">
@@ -190,7 +191,7 @@ export default{
         position:fixed;
         bottom:0;
         left:0;
-        z-index:100000000;
+        z-index:400000000000;
     }
     .ezpz-universal-keyboard.pin-pad{
         width:400px;
@@ -199,6 +200,8 @@ export default{
     }
     .ezpz-universal-keyboard .universal-keyboard{
         background:#333333;
+        position:relative;
+        z-index:4000000000000000;
     }
     .ezpz-universal-keyboard.pin-pad .universal-keyboard{
         border-radius:30px;

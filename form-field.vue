@@ -7,9 +7,9 @@
             <span class="leading-icon fa" v-bind:class="leadingIcon"></span>
           </div>
 
-          <input v-bind:type="type" v-if="type=='text' || type=='email'" v-bind:name="fieldName" v-bind:id="fieldName" @input="catchUpdateEvent" v-bind:value="localVal" v-bind:disabled="disabled" v-bind:maxlength="maxlength" />
+          <input v-bind:class="{'no-keyboard': noKeyboard}" v-bind:type="type" v-if="type=='text' || type=='email'" v-bind:name="fieldName" v-bind:id="fieldName" @input="catchUpdateEvent" v-bind:value="localVal" v-bind:disabled="disabled" v-bind:maxlength="maxlength" />
           
-          <input v-bind:type="type" v-if="type=='number'" v-bind:name="fieldName" v-bind:id="fieldName" @input="catchUpdateEvent" v-bind:value="localVal" v-bind:disabled="disabled" v-bind:maxlength="maxlength" />
+          <input v-bind:class="{'no-keyboard': noKeyboard}" v-bind:type="type" v-if="type=='number'" v-bind:name="fieldName" v-bind:id="fieldName" @input="catchUpdateEvent" v-bind:value="localVal" v-bind:disabled="disabled" v-bind:maxlength="maxlength" />
 
           <textarea v-bind:name="fieldName" v-if="type=='textarea'" v-bind:id="fieldName" @input="catchUpdateEvent" v-bind:value="localVal" v-bind:disabled="disabled"></textarea>
 
@@ -68,7 +68,7 @@
         components: {
       		Notification, LoadingSpinner
       	},
-        props: ['type', 'field', 'value', 'label', 'error', 'onLabel', 'offLabel', 'useLabelsAsValue', 'loading', 'required', 'disabled', 'options', 'maxlength', 'leadingIcon', 'lightMode'],
+        props: ['type', 'field', 'value', 'label', 'error', 'onLabel', 'offLabel', 'useLabelsAsValue', 'loading', 'required', 'disabled', 'options', 'maxlength', 'leadingIcon', 'lightMode', 'noKeyboard'],
         data: function(){
             return {
                 id: false,
