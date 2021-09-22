@@ -41,12 +41,15 @@
       justify-content:center;
       z-index:10000000000;
     }
+    .ezpz-full-screen-icon.success,
+    .ezpz-full-screen-icon.error,
     .ezpz-full-screen-icon{
       width:300px;
       height:300px;
       display:flex;
       align-items:center;
       justify-content:center;
+      background:transparent !important;
     }
     .ezpz-full-screen-icon .fa{
       font-size:150px;
