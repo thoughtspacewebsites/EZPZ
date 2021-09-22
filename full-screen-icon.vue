@@ -50,7 +50,7 @@
     }
     .ezpz-full-screen-icon .fa{
       font-size:150px;
-      border-radius:50%;
+      border-radius:50% !important;
       width:100%;
       height:100%;
       text-align:center;
