@@ -25,7 +25,7 @@ export default{
             initing: false,
             isPinPad: false,
             pinPadLayout: {
-                default: ["1 2 3", "4 5 6", "7 8 9", " 0 ", "{bksp}"]
+                default: ["1 2 3", "4 5 6", "7 8 9", " 0 .", "{bksp}"]
             },
             padTheme: "hg-theme-default hg-layout-numeric numeric-theme"
         }
@@ -126,7 +126,6 @@ export default{
                 this.activeInput = event.target.id && event.target.id != "" ? event.target.id : 'uk-active-input'
                 event.target.id = this.activeInput;
                 event.target.classList.add('uk-active-input');
-     
                 this.$nextTick(function(){
                     
                     //Now make a new keyboard for this input...
@@ -196,7 +195,8 @@ export default{
     .ezpz-universal-keyboard.pin-pad{
         width:400px;
         bottom:20px;
-        left:20px; 
+        left:auto;
+        right:20px; 
     }
     .ezpz-universal-keyboard .universal-keyboard{
         background:#333333;
