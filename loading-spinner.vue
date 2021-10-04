@@ -1,12 +1,14 @@
 <template>
     <div class="ezpz-ls-container" v-bind:class="{fullscreen: fullscreen, floating: size == 'floating'}">
       <div class="ezpz-loading-spinner" v-bind:class="size">
-          <img v-bind:src="'./loading'+compType+'.gif'" alt="Loading, Please Wait..." title="Loading, Please Wait..." />
+          <img v-bind:src="loadingSpinnerSrc" alt="Loading, Please Wait..." title="Loading, Please Wait..." />
           <h2 v-if="size != 'small' && size != 'medium'">{{text || "Loading, Please Wait..."}}</h2>
       </div>
     </div>
 </template>
 <script>
+import LightSpinner from './images/loading.gif';
+import DarkSpinner from './images/loading-dark.gif';
     export default {
 	name: 'LoadingSpinner',
         props: ['type', 'size', 'fullscreen', 'text'],
@@ -20,13 +22,12 @@
 
         },
         computed: {
-
-            compType: function(){
-                if(this.type == 'dark' || this.size == 'floating'){
-                    return '-dark';
+            loadingSpinnerSrc: function(){
+                if(this.type == 'dark'){
+                    return DarkSpinner;
                 }
                 else{
-                    return '';
+                    return LightSpinner;
                 }
             }
         }
