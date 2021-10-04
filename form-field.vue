@@ -13,10 +13,10 @@
 
           <textarea v-bind:name="fieldName" v-if="type=='textarea'" v-bind:id="fieldName" @input="catchUpdateEvent" v-bind:value="localVal" v-bind:disabled="disabled"></textarea>
 
-          <div class="toggle-container" v-if="type=='toggle'" v-bind:class="{active: isToggleActive, light: lightMode}" v-on:click="changeFieldValue()">
+          <div class="toggle-container" v-if="type=='toggle'" v-bind:class="{active: isToggleActive, light: lightMode}">
             <div class="slider"></div>
-            <div class="label off">{{offLabel}}</div>
-            <div class="label on">{{onLabel}}</div>
+            <div class="label off" v-on:click="changeFieldValue(false)">{{offLabel}}</div>
+            <div class="label on" v-on:click="changeFieldValue(true)">{{onLabel}}</div>
           </div>
 
           <div class="select-container" v-if="type=='select'">
@@ -108,10 +108,10 @@
             changeFieldValue(toUpdate) {
               var emitVal = toUpdate;
               if(this.type == "toggle" && this.useLabelsAsValue == "true"){
-                emitVal = this.localVal == this.offLabel ? this.onLabel : this.offLabel;
+                emitVal = toUpdate ? this.offLabel : this.onLabel;
               }
               else if(this.type == "toggle"){
-                emitVal = !this.localVal;
+                emitVal = toUpdate;
               }
               this.$emit("input", emitVal);
               this.localVal = emitVal;
