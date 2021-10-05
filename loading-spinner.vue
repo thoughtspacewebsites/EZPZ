@@ -7,8 +7,8 @@
     </div>
 </template>
 <script>
-import LightSpinner from 'ezpz/images/loading.gif';
-import DarkSpinner from 'ezpz/images/loading-dark.gif';
+import LightSpinner from './images/loading.gif';
+import DarkSpinner from './images/loading-dark.gif';
     export default {
 	name: 'LoadingSpinner',
         props: ['type', 'size', 'fullscreen', 'text'],
