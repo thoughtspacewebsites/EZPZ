@@ -110,9 +110,10 @@
               if(this.type == "toggle" && this.useLabelsAsValue == "true"){
                 emitVal = emitVal == toUpdate ? this.offLabel : this.onLabel;
               }
-              else if(this.type == "toggle"){
+              else{
                 emitVal = toUpdate;
               }
+              
               this.$emit("input", emitVal);
               this.localVal = emitVal;
               this.$nextTick(function(){
