@@ -106,9 +106,9 @@
         },
         methods: {
             changeFieldValue(toUpdate) {
-              var emitVal = toUpdate;
+              var emitVal = "";
               if(this.type == "toggle" && this.useLabelsAsValue == "true"){
-                emitVal = toUpdate ? this.offLabel : this.onLabel;
+                emitVal = emitVal == toUpdate ? this.offLabel : this.onLabel;
               }
               else if(this.type == "toggle"){
                 emitVal = toUpdate;
