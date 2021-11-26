@@ -7,7 +7,7 @@
             <span class="leading-icon fa" v-bind:class="leadingIcon"></span>
           </div>
 
-          <input v-bind:class="{'no-keyboard': noKeyboard}" v-bind:type="type" v-if="type=='text' || type=='email'" v-bind:name="fieldName" v-bind:id="fieldName" @input="catchUpdateEvent" v-bind:value="localVal" v-bind:disabled="disabled" v-bind:maxlength="maxlength" />
+          <input v-bind:class="{'no-keyboard': noKeyboard}" v-bind:type="type" v-if="type=='text' || type=='email' || type=='password'" v-bind:name="fieldName" v-bind:id="fieldName" @input="catchUpdateEvent" v-bind:value="localVal" v-bind:disabled="disabled" v-bind:maxlength="maxlength" />
           
           <input v-bind:class="{'no-keyboard': noKeyboard}" v-bind:type="type" v-if="type=='number'" v-bind:name="fieldName" v-bind:id="fieldName" @input="catchUpdateEvent" v-bind:value="localVal" v-bind:disabled="disabled" v-bind:maxlength="maxlength" />
 
