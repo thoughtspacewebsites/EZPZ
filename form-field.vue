@@ -3,7 +3,7 @@
         <label v-bind:for="fieldName" v-if="label">{{label}} <span class="req" v-if="required">*</span></label>
         <div class="input-container" v-bind:class="{'has-leading-icon': leadingIcon}">
 
-          <div v-if='leadingIcon'>
+          <div v-if='leadingIcon' v-on:click="iconClick">
             <span class="leading-icon fa" v-bind:class="leadingIcon"></span>
           </div>
 
@@ -151,6 +151,9 @@
                 content.parentNode.removeChild(content);
                 body.appendChild(content);
               }
+            },
+            iconClick: function(){
+              this.$emit("icon-click");
             }
         },
         mounted: function(){
@@ -218,7 +221,7 @@
     }
 
     .has-leading-icon input{
-      padding-left:75px;
+      padding-left:75px !important;
     }
 
     input,
