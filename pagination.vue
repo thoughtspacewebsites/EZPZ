@@ -57,7 +57,8 @@ export default {
   line-height:40px;
   padding:0;
   margin:0;
-  font-size:20px;
+  font-size:14px;
+  font-weight:700;
   background:$dark-bg-color;
   color:$light-text-color;
   border-radius:50%;
