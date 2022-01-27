@@ -1,11 +1,5 @@
 <template>
   <section class="ezpz-timer" v-bind:class="{running: timer}">
-    <div class="background-icon fa fa-clock"></div>
-      <div class="timer">
-        <div class="digits hours">{{hours}}</div>
-        <div class="digits minutes">{{minutes}}</div>
-        <div class="digits seconds">{{seconds}}</div>
-      </div>
 
     <div class="controls">
       <transition name="zoom" mode="out-in">
@@ -13,6 +7,14 @@
         <div class="stop-timer" v-on:click="stopTimer()" v-if="timer" key="stop">Clock Out</div>
       </transition>
     </div>
+
+    <div class="background-icon right fa fa-clock"></div>
+    <div class="timer">
+      <div class="digits hours">{{hours}}</div>
+      <div class="digits minutes">{{minutes}}</div>
+      <div class="digits seconds">{{seconds}}</div>
+    </div>
+
     <alert type="warn" has-confirm="true" v-bind:message="stopConfirmation" v-on:confirm="confirmStopTimer" v-on:dismiss="stopConfirmation = false"></alert>
   </section>
 </template>
@@ -110,46 +112,42 @@ export default {
   display:flex;
   align-items:center;
   padding:0px 25px;
-  padding-left:120px;
+  padding-right:125px;
   background:rgba(0,0,0,.2);
   border-radius:100px;
   transition:all .2s;
 }
 .timer{
-  font-size:100px;
+  font-size:80px;
   display:flex;
   align-items:center;
   justify-content:center;
   font-weight:700;
   color:$light-text-color;
+  margin-left:auto;
 }
 .timer .digits:not(:first-of-type):before{
   content:":";
   font-size:60px;
-}
-.ezpz-timer.running{
-  background-color:$form-success;
 }
 .controls{
 display:inline-block;
 vertical-align:center;
 text-align:center;
 font-size:100px;
-margin-left:auto;
-color:rgba(0,0,0,.3);
 margin-top:20px;
 margin-bottom:20px;
 }
 
 .controls .start-timer,
 .controls .stop-timer{
-  background:$light-text-color;
+  background:$dark-bg-color;
+  color:$light-text-color !important;
   border-radius:500px;
   padding:0px 50px;
 }
 .controls .stop-timer{
   color:$form-error;
   background:$form-error !important;
-  color:$light-text-color !important;
 }
 </style>
