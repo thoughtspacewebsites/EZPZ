@@ -9,8 +9,8 @@
 
     <div class="controls">
       <transition name="zoom" mode="out-in">
-        <div class="start-timer fa fa-play-circle" v-on:click="startTimer()" v-if="!timer" key="start"></div>
-        <div class="stop-timer fa fa-stop-circle" v-on:click="stopTimer()" v-if="timer" key="stop"></div>
+        <div class="start-timer" v-on:click="startTimer()" v-if="!timer" key="start">Clock In</div>
+        <div class="stop-timer" v-on:click="stopTimer()" v-if="timer" key="stop">Clock Out</div>
       </transition>
     </div>
     <alert type="warn" has-confirm="true" v-bind:message="stopConfirmation" v-on:confirm="confirmStopTimer" v-on:dismiss="stopConfirmation = false"></alert>
@@ -109,14 +109,14 @@ export default {
   text-align:center;
   display:flex;
   align-items:center;
-  padding:0px 45px;
+  padding:0px 25px;
   padding-left:120px;
   background:rgba(0,0,0,.2);
   border-radius:100px;
   transition:all .2s;
 }
 .timer{
-  font-size:120px;
+  font-size:100px;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -136,9 +136,20 @@ vertical-align:center;
 text-align:center;
 font-size:100px;
 margin-left:auto;
-color:$light-text-color;
+color:rgba(0,0,0,.3);
+margin-top:20px;
+margin-bottom:20px;
 }
-.stop-timer{
+
+.controls .start-timer,
+.controls .stop-timer{
+  background:$light-text-color;
+  border-radius:500px;
+  padding:0px 50px;
+}
+.controls .stop-timer{
   color:$form-error;
+  background:$form-error !important;
+  color:$light-text-color !important;
 }
 </style>
