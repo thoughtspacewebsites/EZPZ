@@ -1,5 +1,5 @@
 <template>
-    <section class="ezpz-card-swipe-input">
+    <section class="ezpz-card-swipe-input" ref="inputWindow">
         <div class="swipe-card" v-if="!extractedLineOne">
             <notification type="info" v-if="!swipeError">
                 Please swipe a card
@@ -53,6 +53,9 @@ export default {
                 if(!that.cardNumber && that.$refs && that.$refs.cardNumber){
                     that.$refs.cardNumber.focus();
                 }
+            });
+            this.$nextTick(function(){
+                that.$refs.cardNumber.focus();
             });
         }
         

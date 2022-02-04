@@ -12,26 +12,33 @@
 </template>
 <script>
 import Vuex from 'vuex';
-
+import CardSwipeInput from './card-swipe-input.vue';
 export default {
     components: {
-        Vuex
+        Vuex, CardSwipeInput
     },
 	props: [],
     mixins: [],
     data: function(){
         return {
-            
         }
     },
 	computed: {
         ...Vuex.mapState(['carts']),
-        
+        cardData: {
+            get: function(){
+                return this.value || false;
+            },
+            set: function(value){
+                this.$emit('input', value);
+                this.$emit('dismiss');
+            }
+        }
 	},
 	methods: {
         dismiss: function(){
             this.$emit('dismiss');
-        },
+        }
     },
     mounted: function(){
         this.$root.$el.append(this.$el);
