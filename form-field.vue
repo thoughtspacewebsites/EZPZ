@@ -13,6 +13,8 @@
 
           <textarea v-bind:name="fieldName" v-if="type=='textarea'" v-bind:id="fieldName" @input="catchUpdateEvent" v-bind:value="localVal" v-bind:disabled="disabled"></textarea>
 
+          <input type="checkbox" v-bind:name="fieldName" v-if="type=='checkbox'" v-bind:id="fieldName" @input="catchUpdateEvent" v-bind:checked="localVal" v-bind:disabled="disabled" />
+
           <div class="toggle-container" v-if="type=='toggle'" v-bind:class="{active: isToggleActive, light: lightMode}">
             <div class="slider"></div>
             <div class="label off" v-on:click="changeFieldValue(false)">{{offLabel}}</div>
@@ -122,7 +124,12 @@
 
             },
             catchUpdateEvent: function(event){
-              this.changeFieldValue(event.target.value);
+              if(this.type == 'checkbox'){
+                this.changeFieldValue(event.target.checked);
+              }
+              else{
+                this.changeFieldValue(event.target.value);
+              }
             },
             testIsToggleActive: function(){
               if(this.useLabelsAsValue != "true"){
@@ -247,6 +254,63 @@
         border:5px solid $mid-bg-color;
         outline:none;
     }
+
+    input[type=checkbox]{
+      width:auto;
+      text-align:center;
+    }
+
+    input[type="checkbox"] {
+      /* Add if not using autoprefixer */
+      -webkit-appearance: none;
+      /* Remove most all native input styles */
+      appearance: none;
+      /* For iOS < 15 */
+      background-color:$light-bg-color;
+      /* Not removed via appearance */
+      margin: 0;
+
+      font: inherit;
+      color: $form-success;
+      width: 25px;
+      height: 30px;
+      border-width:3px !important;
+      border-radius: 5px;
+      display: grid;
+      place-content: center;
+    }
+
+    input[type="checkbox"]::before {
+      content: "";
+      width: 1em;
+      height: 1em;
+      clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+      transform: scale(0);
+      transform-origin: bottom left;
+      transition: 120ms transform ease-in-out;
+      box-shadow: inset 1em 1em $form-success;
+      /* Windows High Contrast Mode */
+      background-color: $form-success;
+    }
+
+    input[type="checkbox"]:checked{
+      border:3px solid $form-success;
+    }
+    input[type="checkbox"]:checked::before {
+      transform: scale(1);
+    }
+
+    input[type="checkbox"]:focus {
+      border:3px solid $form-info !important;
+    }
+
+    input[type="checkbox"]:disabled {
+      --form-control-color: var($form-error);
+
+      color: $form-error;
+      cursor: not-allowed;
+    }
+
     .selected-placeholder{
       position:relative;
     }
