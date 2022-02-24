@@ -32,11 +32,17 @@ export default {
 
       var returnVal = false;
       if(this.allowMultiple){
-        if(this.tempSelected.indexOf(option) == -1 && (!this.maxSelections || this.tempSelected.length < this.maxSelections)){
+        var matchedIndex = false;
+        for(var i in this.tempSelected){
+          if(_.isEqual(this.tempSelected[i], option)){
+            matchedIndex = i;
+          }
+        }
+        if(matchedIndex === false && (!this.maxSelections || this.tempSelected.length < this.maxSelections)){
           this.tempSelected.push(option);
         }
-        else if(this.tempSelected.indexOf(option) != -1){
-          this.tempSelected.splice(this.tempSelected.indexOf(option), 1);
+        else if(matchedIndex){
+          this.tempSelected.splice(matchedIndex, 1);
         }
         returnVal = this.tempSelected;
       }
@@ -47,13 +53,19 @@ export default {
     },
     isSelected: function(option){
       if(this.allowMultiple){
-        if(this.tempSelected.indexOf(option) != -1){
-          return true;
+        if(this.tempSelected && this.tempSelected.length){
+          for(var i in this.tempSelected){
+            if(_.isEqual(this.tempSelected[i].value, option.value)){
+              return true;
+            }
+          }
         }
       }
       else{
         return _.isEqual(this.selected, option);
       }
+
+      return false;
 
     },
 
