@@ -89,7 +89,7 @@ export default {
   transition:all .2s;
   -webkit-transition:all .2s;
   border-radius:5px;
-  margin:15px;
+  margin:10px;
   font-size:18px;
   flex: 1;
   flex-basis:200px;
@@ -135,7 +135,7 @@ export default {
   z-index:10;
   width:100%;
   height:100%;
-  padding:25px;
+  padding:15px 25px;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -150,7 +150,7 @@ export default {
   font-weight:300;
   display:block;
   font-style:italic;
-  margin-top:5px;
+  margin-top:0px;
 }
 .selected-label{
   background:$form-success;
