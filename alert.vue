@@ -54,9 +54,16 @@ export default {
     }
 	},
   mounted: function(){
-    this.$el.parentNode.removeChild(this.$el);
-    document.getElementById('oakmont-bakery-pos').appendChild(this.$el);
-  }
+
+    //NEW WAY
+    // this.id = this._uid;
+    // this.$root.$el.append(this.$el);
+
+
+    //OLD WAY
+    // this.$el.parentNode.removeChild(this.$el);
+    // document.getElementById('oakmont-bakery-pos').appendChild(this.$el);
+  },
 }
 </script>
 <style scoped lang="scss">

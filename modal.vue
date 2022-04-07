@@ -35,8 +35,8 @@ export default {
     }
   },
   mounted: function(){
-    this.id = this._uid;
-    this.$root.$el.append(this.$el);
+    // this.id = this._uid;
+    // this.$root.$el.append(this.$el);
   }
 }
 </script>
