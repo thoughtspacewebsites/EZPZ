@@ -1,7 +1,8 @@
 <template>
   <div class="pin-pad" v-bind:class="{'dark-mode': darkMode}">
     <div class="number flash-effect" v-for="number in (1, 9)" v-on:click="updateValue(number)">{{number}}</div>
-    <div class="number"></div>
+    <div class="number" v-if="!canBeNegative || !value"></div>
+    <div class="number flash-effect" v-if="canBeNegative && value" v-on:click="updateValue('-')">-</div>
     <div class="number flash-effect" v-on:click="updateValue(0)">0</div>
     <div class="number flash-effect" v-on:click="backspaceValue()">
         <span class="fa fa-backspace"></span>
@@ -14,7 +15,7 @@ export default {
   components: {
 
 	},
-	props: ['value', 'darkMode'],
+	props: ['value', 'darkMode', 'canBeNegative'],
 	data: function(){
 	    return {
 
@@ -28,11 +29,22 @@ export default {
     updateValue: function(number){
       var newVal = "";
       if(this.value){
-        newVal = this.value.toString()+number;
+        if(number == "-"){
+          number = parseInt(number);
+          if(this.value){
+            newVal = -this.value;
+          }
+          
+          newVal = newVal.toString();
+        }
+        else{
+          newVal = this.value.toString()+number;
+        }
       }
-      else{
+      else if(number != "-"){
         newVal = number.toString();
       }
+      console.log('new value: '+newVal);
       this.$emit('input', parseInt(newVal));
     },
     backspaceValue: function(){
