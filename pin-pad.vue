@@ -1,5 +1,5 @@
 <template>
-  <div class="pin-pad" v-bind:class="{'dark-mode': darkMode}">
+  <div class="pin-pad" v-bind:class="[size, {'dark-mode': darkMode}]">
     <div class="number flash-effect" v-for="number in (1, 9)" v-on:click="updateValue(number)">{{number}}</div>
     <div class="number" v-if="!canBeNegative || !value"></div>
     <div class="number flash-effect" v-if="canBeNegative && value" v-on:click="updateValue('-')">-</div>
@@ -15,7 +15,7 @@ export default {
   components: {
 
 	},
-	props: ['value', 'darkMode', 'canBeNegative'],
+	props: ['value', 'darkMode', 'canBeNegative', 'size'],
 	data: function(){
 	    return {
 
@@ -111,5 +111,10 @@ border-right:1px solid rgba(0,0,0,.1);
 .dark-mode .number:nth-child(7),
 .dark-mode .number:nth-child(10){
   border-left:1px solid rgba(255,255,255,.1);
+}
+
+
+.pin-pad.small .number{
+  height:70px;
 }
 </style>
