@@ -44,7 +44,6 @@ export default {
       else if(number != "-"){
         newVal = number.toString();
       }
-      console.log('new value: '+newVal);
       this.$emit('input', parseInt(newVal));
     },
     backspaceValue: function(){
