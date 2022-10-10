@@ -80,6 +80,8 @@ export default {
 .ezpz-button-select{
   display: flex;
   flex-wrap:wrap;
+  align-items:center;
+  justify-content:center;
 }
 .option{
   position:relative;
@@ -90,9 +92,10 @@ export default {
   -webkit-transition:all .2s;
   border-radius:5px;
   margin:10px;
-  font-size:18px;
-  flex: 1;
-  flex-basis:200px;
+  font-size:16px;
+  align-self: stretch;
+  width:calc(25% - 20px);
+  flex-basis:calc(25% - 20px);
   font-weight:700;
   text-align:center;
   display: flex;
@@ -135,7 +138,7 @@ export default {
   z-index:10;
   width:100%;
   height:100%;
-  padding:15px 25px;
+  padding:10px 25px;
   display:flex;
   align-items:center;
   justify-content:center;
