@@ -55,6 +55,7 @@ export default {
       if(this.allowMultiple){
         if(this.tempSelected && this.tempSelected.length){
           for(var i in this.tempSelected){
+            console.log('option values', option.value, this.tempSelected[i].value);
             if(_.isEqual(this.tempSelected[i].value, option.value)){
               return true;
             }
@@ -70,6 +71,11 @@ export default {
     },
 
 	},
+  watch: {
+    selected: function(val){
+      this.tempSelected = val;
+    }
+  },
   mounted: function(){
     this.tempSelected = this.selected ? this.selected : [];
     
