@@ -55,7 +55,6 @@ export default {
       if(this.allowMultiple){
         if(this.tempSelected && this.tempSelected.length){
           for(var i in this.tempSelected){
-            console.log('option values', option.value, this.tempSelected[i].value);
             if(_.isEqual(this.tempSelected[i].value, option.value)){
               return true;
             }
