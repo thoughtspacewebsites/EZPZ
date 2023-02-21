@@ -1,19 +1,19 @@
 <template>
     <div class="ezpz-field-wrap">
-        <label v-bind:for="fieldName" v-if="label">{{label}} <span class="req" v-if="required">*</span></label>
+        <label v-bind:for="fieldName" v-if="label" v-html="parsedLabel"></label>
         <div class="input-container" v-bind:class="{'has-leading-icon': leadingIcon}">
 
           <div v-if='leadingIcon' v-on:click="iconClick">
             <span class="leading-icon fa" v-bind:class="leadingIcon"></span>
           </div>
 
-          <input v-bind:class="{'no-keyboard': noKeyboard}" v-bind:type="type" v-if="type=='text' || type=='email' || type=='password'" v-bind:name="fieldName" v-bind:id="fieldName" @input="catchUpdateEvent" v-bind:value="localVal" v-bind:disabled="disabled" v-bind:maxlength="maxlength" />
+          <input ref="inputEl" v-bind:class="{'no-keyboard': noKeyboard}" v-bind:type="type" v-if="type=='text' || type=='email' || type=='password'" v-bind:name="fieldName" v-bind:id="fieldName" @input="catchUpdateEvent" v-bind:value="localVal" v-bind:disabled="disabled" v-bind:maxlength="maxlength" />
           
-          <input v-bind:class="{'no-keyboard': noKeyboard}" v-bind:type="type" v-if="type=='number'" v-bind:name="fieldName" v-bind:id="fieldName" @input="catchUpdateEvent" v-bind:value="localVal" v-bind:disabled="disabled" v-bind:maxlength="maxlength" />
+          <input ref="inputEl" v-bind:class="{'no-keyboard': noKeyboard}" v-bind:type="type" v-if="type=='number'" v-bind:name="fieldName" v-bind:id="fieldName" @input="catchUpdateEvent" v-bind:value="localVal" v-bind:disabled="disabled" v-bind:maxlength="maxlength" />
 
-          <textarea v-bind:name="fieldName" v-if="type=='textarea'" v-bind:id="fieldName" @input="catchUpdateEvent" v-bind:value="localVal" v-bind:disabled="disabled"></textarea>
+          <textarea ref="inputEl" v-bind:name="fieldName" v-if="type=='textarea'" v-bind:id="fieldName" @input="catchUpdateEvent" v-bind:value="localVal" v-bind:disabled="disabled"></textarea>
 
-          <input type="checkbox" v-bind:name="fieldName" v-if="type=='checkbox'" v-bind:id="fieldName" @input="catchUpdateEvent" v-bind:checked="localVal" v-bind:disabled="disabled" />
+          <input ref="inputEl" type="checkbox" v-bind:name="fieldName" v-if="type=='checkbox'" v-bind:id="fieldName" @input="catchUpdateEvent" v-bind:checked="localVal" v-bind:disabled="disabled" />
 
           <div class="toggle-container" v-if="type=='toggle'" v-bind:class="{active: isToggleActive, light: lightMode}">
             <div class="slider"></div>
@@ -70,7 +70,7 @@
         components: {
       		Notification, LoadingSpinner
       	},
-        props: ['type', 'field', 'value', 'label', 'error', 'onLabel', 'offLabel', 'useLabelsAsValue', 'loading', 'required', 'disabled', 'options', 'maxlength', 'leadingIcon', 'lightMode', 'noKeyboard'],
+        props: ['type', 'field', 'value', 'label', 'error', 'onLabel', 'offLabel', 'useLabelsAsValue', 'loading', 'required', 'disabled', 'options', 'maxlength', 'leadingIcon', 'lightMode', 'noKeyboard', 'focusOnCreate'],
         data: function(){
             return {
                 id: false,
@@ -83,6 +83,9 @@
             }
         },
         computed: {
+          parsedLabel: function(){
+            return this.label + (this.required ? "<span class='req'>*</span>" : '');
+          },
           filteredOptions: {
             get: function(){
               if(this.options){
@@ -172,6 +175,13 @@
           }
           this.id = this._uid
           this.moveSelect();
+
+          if(this.focusOnCreate){
+            var that = this;
+            this.$nextTick(function(){
+              that.$refs.inputEl.focus();
+            })
+          }
 
         },
         watch: {
