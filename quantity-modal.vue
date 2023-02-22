@@ -13,7 +13,7 @@
           <notification type="error" v-if="invalidQuantity">Please enter a valid quantity!</notification>
       </transition>
       <div class="pin-container">
-        <pin-pad v-model="quantity"></pin-pad>
+        <pin-pad v-model="quantity" dark-mode="true"></pin-pad>
       </div>
       <div class="button full-width confirm-button" v-on:click="setQuantity()">Confirm</div>
       <div class="cancel text-flash" v-on:click="cancelQuantitySet()">

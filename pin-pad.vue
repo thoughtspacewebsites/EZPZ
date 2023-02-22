@@ -21,7 +21,7 @@ export default {
   components: {
     FormField
 	},
-	props: ['value', 'darkMode', 'canBeNegative', 'size'],
+	props: ['value', 'darkMode', 'canBeNegative', 'size', 'fractional'],
 	data: function(){
 	    return {
 
@@ -31,10 +31,18 @@ export default {
 	computed: {
     typedNumber: {
       get: function(){
-        return this.value/100;
+        if(this.fractional){
+          return this.value/100;
+        }
+        else{
+          return this.value;
+        }
       },
       set: function(val){
-        this.$emit('input', val*100);
+        if(this.fractional){
+          val = val*100;
+        }
+        this.$emit('input', val);
       }
     }
 	},
@@ -80,7 +88,7 @@ export default {
   position:relative;
 }
 .input-container::v-deep .ezpz-field-wrap{
-  margin-bottom:0;
+  margin:0;
 }
 .input-container::v-deep input{
 border:none;
