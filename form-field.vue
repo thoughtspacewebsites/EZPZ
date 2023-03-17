@@ -7,13 +7,13 @@
             <span class="leading-icon fa" v-bind:class="leadingIcon"></span>
           </div>
 
-          <input ref="inputEl" v-bind:class="{'no-keyboard': noKeyboard}" v-bind:type="type" v-if="type=='text' || type=='email' || type=='password'" v-bind:name="fieldName" v-bind:id="fieldName" @input="catchUpdateEvent" v-bind:value="localVal" v-bind:disabled="disabled" v-bind:maxlength="maxlength" />
+          <input ref="inputEl" v-bind:class="{'no-keyboard': noKeyboard}" v-bind:type="type" v-if="type=='text' || type=='email' || type=='password'" v-bind:name="fieldName" v-bind:id="fieldName" @input.stop="catchUpdateEvent" v-bind:value="localVal" v-bind:disabled="disabled" v-bind:maxlength="maxlength" />
           
-          <input ref="inputEl" v-bind:class="{'no-keyboard': noKeyboard}" v-bind:type="type" v-if="type=='number'" v-bind:name="fieldName" v-bind:id="fieldName" @input="catchUpdateEvent" v-bind:value="localVal" v-bind:disabled="disabled" v-bind:maxlength="maxlength" />
+          <input ref="inputEl" v-bind:class="{'no-keyboard': noKeyboard}" v-bind:type="type" v-if="type=='number'" v-bind:name="fieldName" v-bind:id="fieldName" @input.stop="catchUpdateEvent" v-bind:value="localVal" v-bind:disabled="disabled" v-bind:maxlength="maxlength" />
 
-          <textarea ref="inputEl" v-bind:name="fieldName" v-if="type=='textarea'" v-bind:id="fieldName" @input="catchUpdateEvent" v-bind:value="localVal" v-bind:disabled="disabled"></textarea>
+          <textarea ref="inputEl" v-bind:name="fieldName" v-if="type=='textarea'" v-bind:id="fieldName" @input.stop="catchUpdateEvent" v-bind:value="localVal" v-bind:disabled="disabled"></textarea>
 
-          <input ref="inputEl" type="checkbox" v-bind:name="fieldName" v-if="type=='checkbox'" v-bind:id="fieldName" @input="catchUpdateEvent" v-bind:checked="localVal" v-bind:disabled="disabled" />
+          <input ref="inputEl" type="checkbox" v-bind:name="fieldName" v-if="type=='checkbox'" v-bind:id="fieldName" @input.stop="catchUpdateEvent" v-bind:checked="localVal" v-bind:disabled="disabled" />
 
           <div class="toggle-container" v-if="type=='toggle'" v-bind:class="{active: isToggleActive, light: lightMode}">
             <div class="slider"></div>
@@ -49,6 +49,24 @@
             </transition>
           </div>
 
+
+
+          <div class="image-upload-container" v-if="type=='image'" v-bind:class="{'is-selected': localVal, 'error': error}">
+            <input type="file" v-bind:name="fieldName" v-bind:id="fieldName" v-bind:disabled="disabled" v-on:input.stop="catchUpdateEvent" accept="image/*" ref="fileInput" />
+            <div class="image-upload-placeholder">
+              <span class="fa fa-upload"></span>
+              <p v-if="!localVal" class="placeholder-text">
+                Please select an image
+              </p>
+              <img v-if="localVal && localVal.base64" v-bind:src="localVal.base64" />
+              <img v-else-if="localVal && localVal.length" v-bind:src="localVal" />
+              <div class="icon-container">
+                <span class="fa fa-pencil" v-if="localVal" v-on:click.stop="selectFile()"></span>
+                <span class="fa fa-ban" v-if="localVal" v-on:click.stop="changeFieldValue(false);"></span>
+              </div>
+            </div>
+          </div>
+
           <transition name="scale">
             <loading-spinner size="small" v-if="loading" class="field-loading"></loading-spinner>
           </transition>
@@ -70,7 +88,25 @@
         components: {
       		Notification, LoadingSpinner
       	},
-        props: ['type', 'field', 'value', 'label', 'error', 'onLabel', 'offLabel', 'useLabelsAsValue', 'loading', 'required', 'disabled', 'options', 'maxlength', 'leadingIcon', 'lightMode', 'noKeyboard', 'focusOnCreate'],
+        props: [
+          'type', 
+          'field', 
+          'value', 
+          'label', 
+          'error', 
+          'onLabel', 
+          'offLabel', 
+          'useLabelsAsValue', 
+          'loading', 
+          'required', 
+          'disabled', 
+          'options', 
+          'maxlength', 
+          'leadingIcon', 
+          'lightMode', 
+          'noKeyboard', 
+          'focusOnCreate'
+        ],
         data: function(){
             return {
                 id: false,
@@ -130,6 +166,23 @@
               if(this.type == 'checkbox'){
                 this.changeFieldValue(event.target.checked);
               }
+              else if(event.srcElement && event.srcElement.type == 'file' && event.srcElement.accept == 'image/*'){
+                var base64 = "";
+                var reader = new FileReader();
+                reader.readAsDataURL(event.target.files[0]);
+                reader.onload = function () {
+                  base64 = reader.result;
+                  var filename = event.target.files[0].name;
+                  var imageData = {
+                    filename: filename,
+                    base64: base64
+                  }
+                  this.changeFieldValue(imageData);
+                }.bind(this);
+                reader.onerror = function (error) {
+                  console.log('Error reading image: ', error);
+                };
+              }
               else{
                 this.changeFieldValue(event.target.value);
               }
@@ -164,6 +217,9 @@
             },
             iconClick: function(){
               this.$emit("icon-click");
+            },
+            selectFile: function(){
+              this.$refs.fileInput.click();
             }
         },
         mounted: function(){
@@ -500,4 +556,87 @@
     .toggle-container.active .slider{
       left:50%;
     }
+
+    .image-upload-container{
+      position:relative;
+      width:100%;
+      height:350px;
+      overflow:hidden;
+      border-radius:10px;
+      background:$light-bg-color;
+      color:rgba(0,0,0,.5);
+      font-weight:700;
+      display:flex;
+      align-items:center;
+      justify-content: center;
+      flex-direction:column;
+      transition:all .2s;
+      -webkit-transition:all .2s;
+      border:5px dashed $mid-bg-color;
+      cursor:pointer;
+      &.is-selected{
+        border-color:transparent;
+        &:after{
+          content:'';
+          position:absolute;
+          bottom:0;
+          left:0;
+          width:100%;
+          height:100%;
+          background:rgba(0,0,0,.5);
+          z-index:1;
+        }
+      }
+      &.error{
+        border-color:$form-error;
+      }
+    }
+    .image-upload-container .fa-upload{
+      font-size:60px;
+    }
+    .image-upload-container p{
+      font-size:20px;
+      margin-top:20px;
+    }
+    .image-upload-container img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      position:absolute;
+      top:0;
+      left:0;
+      z-index:1;
+    }
+    
+    .image-upload-container input{
+      position:absolute;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      opacity:0;
+      z-index:2;
+    }
+    .image-upload-container .icon-container{
+      font-size:50px;
+      z-index:3;
+      position:absolute;
+      top:50%;
+      left:50%;
+      transform:translateX(-50%) translateY(-50%);
+      transition:all .2s;
+      -webkit-transition:all .2s;
+      .fa{
+        color:$light-text-color;
+        margin-left:20px;
+        margin-right:20px;
+      }
+    }
+    .image-upload-container .fa:hover{
+      color:$form-success;
+    }
+
+    
+
+
 </style>
