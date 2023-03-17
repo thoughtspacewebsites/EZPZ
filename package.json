@@ -1,6 +1,6 @@
 {
   "name": "ezpz",
-  "version": "1.9.1",
+  "version": "1.9.2",
   "description": "A quick library of Vue.JS SFCs for rapid prototyping of new apps or websites",
   "main": "./index.js",
   "repository": "https://github.com/thoughtspacewebsites/EZPZ.git",
