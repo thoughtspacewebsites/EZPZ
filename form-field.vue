@@ -1,5 +1,5 @@
 <template>
-    <div class="ezpz-field-wrap">
+    <div class="ezpz-field-wrap" v-bind:class="{'has-length-counter': maxLength}">
         <label v-bind:for="fieldName" v-if="label" v-html="parsedLabel"></label>
         <div class="input-container" v-bind:class="{'has-leading-icon': leadingIcon}">
 
@@ -7,11 +7,11 @@
             <span class="leading-icon fa" v-bind:class="leadingIcon"></span>
           </div>
 
-          <input ref="inputEl" v-bind:class="{'no-keyboard': noKeyboard}" v-bind:type="type" v-if="type=='text' || type=='email' || type=='password'" v-bind:name="fieldName" v-bind:id="fieldName" @input.stop="catchUpdateEvent" v-bind:value="localVal" v-bind:disabled="disabled" v-bind:maxlength="maxlength" />
+          <input ref="inputEl" v-bind:class="{'no-keyboard': noKeyboard}" v-bind:type="type" v-if="type=='text' || type=='email' || type=='password' || type=='tel'" v-bind:name="fieldName" v-bind:id="fieldName" @input.stop="catchUpdateEvent" v-bind:value="localVal" v-bind:disabled="disabled" v-bind:maxlength="maxLength" v-bind:minlength="minLength" v-bind:placeholder="placeholder" />
           
-          <input ref="inputEl" v-bind:class="{'no-keyboard': noKeyboard}" v-bind:type="type" v-if="type=='number'" v-bind:name="fieldName" v-bind:id="fieldName" @input.stop="catchUpdateEvent" v-bind:value="localVal" v-bind:disabled="disabled" v-bind:maxlength="maxlength" />
+          <input ref="inputEl" v-bind:class="{'no-keyboard': noKeyboard}" v-bind:type="type" v-if="type=='number'" v-bind:name="fieldName" v-bind:id="fieldName" @input.stop="catchUpdateEvent" v-bind:value="localVal" v-bind:disabled="disabled" v-bind:maxlength="maxLength" v-bind:minlength="minLength" v-bind:placeholder="placeholder" />
 
-          <textarea ref="inputEl" v-bind:name="fieldName" v-if="type=='textarea'" v-bind:id="fieldName" @input.stop="catchUpdateEvent" v-bind:value="localVal" v-bind:disabled="disabled"></textarea>
+          <textarea ref="inputEl" v-bind:name="fieldName" v-if="type=='textarea'" v-bind:id="fieldName" @input.stop="catchUpdateEvent" v-bind:value="localVal" v-bind:disabled="disabled" v-bind:maxlength="maxLength" v-bind:minlength="minLength" v-bind:placeholder="placeholder"></textarea>
 
           <input ref="inputEl" type="checkbox" v-bind:name="fieldName" v-if="type=='checkbox'" v-bind:id="fieldName" @input.stop="catchUpdateEvent" v-bind:checked="localVal" v-bind:disabled="disabled" />
 
@@ -71,6 +71,11 @@
             <loading-spinner size="small" v-if="loading" class="field-loading"></loading-spinner>
           </transition>
 
+          <div v-if="maxLength && !disabled" class="length-counter" v-bind:class="{warn: localVal.length + 15 > maxLength, error: localVal.length == maxLength}">
+            <span class="current-length">{{localVal.length}}</span>
+            <span class="max-length">/{{maxLength}}</span>
+          </div>
+
           <slot></slot>
         </div>
         <transition name="scale">
@@ -101,7 +106,9 @@
           'required', 
           'disabled', 
           'options', 
-          'maxlength', 
+          'maxLength', 
+          'minLength',
+          'placeholder',
           'leadingIcon', 
           'lightMode', 
           'noKeyboard', 
@@ -309,6 +316,15 @@
         width:100%;
         transition:all .2s;
         resize:none;
+        &:disabled{
+          cursor:not-allowed;
+          color:rgba(0,0,0,.5);
+        }
+    }
+
+    .has-length-counter input,
+    .has-length-counter textarea{
+      padding-right:75px !important;
     }
     textarea{
       min-height:200px;
@@ -636,7 +652,22 @@
       color:$form-success;
     }
 
-    
+    .length-counter{
+      position:absolute;
+      bottom:7px;
+      right:10px;
+      padding:10px;
+      color:rgba(0,0,0,.2);
+      font-size:12px;
+      font-weight:900;
+      border-radius:0 0 0 10px;
+      &.warn{
+        color:$form-warn;
+      }
+      &.error{
+        color:$form-error;
+      }
+    }
 
 
 </style>
