@@ -217,7 +217,7 @@
               if(this.type == 'select' && document.getElementsByClassName('select-list-'+this.id)[0] && !this.selectIsMoved){
                 this.selectIsMoved = true;
                 var content = document.getElementsByClassName('select-list-'+this.id)[0];
-                var body = document.getElementsByClassName('oakmont-bakery-pos')[0];
+                var body = document.getElementsByTagName('body')[0];
                 content.parentNode.removeChild(content);
                 body.appendChild(content);
               }
