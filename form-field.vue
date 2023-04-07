@@ -196,7 +196,7 @@
             },
             testIsToggleActive: function(){
               if(this.useLabelsAsValue != "true"){
-                this.isToggleActive = this.localVal;
+                this.isToggleActive = this.localVal && this.localVal != "0";
               }
               else{
                 this.isToggleActive = (this.localVal == this.onLabel);
