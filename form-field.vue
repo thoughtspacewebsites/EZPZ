@@ -248,12 +248,13 @@
 
         },
         watch: {
-          value: {
-            handler: function(val){
-            if(val != this.localVal){
-              this.localVal = val;
-            }
-          }
+          value: function(val){
+              if(val != this.localVal){
+                this.localVal = val;
+              }
+              if(this.type == 'toggle'){
+                  this.testIsToggleActive();
+              }
           }
         }
     }
