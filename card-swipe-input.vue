@@ -68,7 +68,9 @@ export default {
                 clearTimeout(this.updatingCard);
                 this.updatingCard = setTimeout(function(){
                     var hasError = false
-                    var cardLines = val.substring(1, val.length -1).split(/(?:\?\;|\?\+|\?\%)+/);
+                    var cardLines = val.substring(1, val.length - 1).split(/(?:\?\;|\?\+|\?\%|Shift\/\;|\r\n|\n|\r)+/);
+
+
                 
                     var lineOne = cardLines[0];
                     var lineTwo = cardLines[1];
