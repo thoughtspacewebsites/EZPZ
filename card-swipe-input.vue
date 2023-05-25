@@ -103,8 +103,13 @@ export default {
                         that.extractedLineTwo = false;
                         that.$refs.cardNumber.focus();
                     }
+
+
+                    //log the lines to console for debug
+                    console.log('line one', lineOne);
+                    console.log('line two', lineTwo);
                     
-                }, 500);
+                }, 750);
                 
             }
         }
