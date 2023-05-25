@@ -104,7 +104,7 @@ export default {
                         that.$refs.cardNumber.focus();
                     }
                     
-                }, 100);
+                }, 500);
                 
             }
         }
