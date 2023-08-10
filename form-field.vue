@@ -39,7 +39,7 @@
                   </div>
                   <div v-if="options.length > 20" class="options-search">
                     <span class="fa fa-search"></span>
-                    <input type="text" v-model="selectSearch" placeholder="Search..." />
+                    <input type="text" v-model="selectSearch" v-on:input.stop placeholder="Search..." />
                   </div>
                   <div class="options">
                     <div class="option" v-for="option in filteredOptions" v-bind:class="{selected: isEqual(option, localVal)}" v-on:click="changeFieldValue(option);toggleSelectVisibility()" v-html="option.label"></div>
